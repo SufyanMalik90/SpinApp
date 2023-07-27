@@ -3,54 +3,66 @@ import {
     Text,
     StyleSheet,
     ScrollView,
-    StatusBar
+    StatusBar,
+    useWindowDimensions,
+    Image
 } from 'react-native'
 import React from 'react'
+import Logo from '../../assets/image/logo.png'
+import TopRatedProfiles from '../Components/TopRatedProfiles '
 
 const HomeScreen = () => {
+
+    const { height } = useWindowDimensions();
+
     return (
         <View style={styles.root}>
-        <StatusBar barStyle="light-content" backgroundColor="#6238b4"/>
+            <StatusBar barStyle="light-content" backgroundColor="#6238b4" />
 
             <View style={styles.headerContainer}>
-                <View style={styles.headerText}>
-
-                    <Text style={styles.textMessage}>Spin Earn Pak</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
                     <View style={styles.text}>
                         <Text style={{ color: '#6238b4', fontWeight: 'bold' }}>Rs 230.02</Text>
                     </View>
+                    <Image source={Logo} style={[styles.logo, { height: height * 0.2 }]} resizeMode="contain" />
 
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                    <View style={styles.headerImage} />
-                    <Text style={styles.textMessage}>Hellow Test Account
-                        {'\n'}03000000000
-                    </Text>
+                <View style={{ alignItems: 'flex-end', marginHorizontal: '11%' }}>
+                    <View style={styles.withdrawContainer}>
+                        <Text style={styles.withdrawText}>Withdraw</Text>
+                    </View>
                 </View>
-                <View style={styles.textProfile}>
-                    <Text style={{fontSize: 12, fontWeight: 'bold'}}>Edit Profile</Text>
+
+                <View style={{ width: '100%', height: 2, backgroundColor: '#000', marginVertical: 5 }} />
+
+                <View style={{ alignItems: 'center', flexDirection: 'row', marginVertical: 4, justifyContent: 'space-around' }}>
+                    <Text style={styles.textMessage}>Invite Friend</Text>
+                    <Text style={[styles.textMessage, { backgroundColor: '#fffffd', color: '#55588d', borderRadius: 5, paddingHorizontal: 2 }]}>Invite Now</Text>
                 </View>
-                <View style={{ alignItems: 'center', flexDirection: 'row', marginVertical: 4, justifyContent: 'center'}}>
-                    <Text style={styles.textMessage}>Latest Update Available</Text>
-                    <Text style={[styles.textMessage, {backgroundColor: '#fffffd', color: '#55588d', borderRadius: 5, paddingHorizontal: 2}]}>Update Now</Text>
-                </View>
+                <View style={{ width: '100%', height: 2, backgroundColor: '#000', marginVertical: 5 }} />
+                <TopRatedProfiles />
+                
             </View>
             <View style={styles.menuContainer}>
                 <View style={styles.menu}>
                     <Text style={styles.menuText}>Daily Bonus</Text>
+                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
                 </View>
                 <View style={styles.menu}>
                     <Text style={styles.menuText}>Extra Reward</Text>
+                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
                 </View>
             </View>
 
             <View style={styles.menuContainer}>
                 <View style={styles.menu}>
                     <Text style={styles.menuText}>Watch Earn</Text>
+                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
                 </View>
                 <View style={styles.menu}>
                     <Text style={styles.menuText}>Spin Earn</Text>
+                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
                 </View>
             </View>
         </View>
@@ -64,7 +76,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: '#6238b4',
         width: '100%',
-        height: '35%'
+        height: '39%'
     },
     headerText: {
         flexDirection: 'row',
@@ -76,18 +88,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: 'auto',
         height: 30,
-        paddingHorizontal: 10,
+        marginHorizontal: '8%',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
+        position: 'absolute',
+        right: 0
     },
-    headerImage: {
-        backgroundColor: '#f79a4a',
-        width: 90,
-        height: 90,
-        borderRadius: 50,
-        marginLeft: 5,
-        marginTop: '4%'
+    withdraw: {
+        alignItems: 'center', // Center the content horizontally
+        width: 'auto',
+        marginHorizontal: '11%',
+        justifyContent: 'center', // Center the content vertically
+    },
+    withdrawText: {
+        color: '#6238b4',
+        fontWeight: 'bold',
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        width: 80,
+        height: 25,
+        textAlign: 'center', // Use textAlign to center the text within the Text component
+        textAlignVertical: 'center', // For Android, use this to center the text vertically
     },
     menu: {
         backgroundColor: '#6238b4',
@@ -113,21 +135,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18
     },
+    subText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 12
+    },
     textProfile: {
-        backgroundColor: '#d9d4fd', 
-        width: 70, 
-        alignItems: 'center', 
-        color: '#02074c',
+        width: 90,
+        alignItems: 'center',
         marginTop: 4,
-        borderRadius: 3,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+
 
     },
     logo: {
-        width: '70%',
-        maxWidth: 300,
-        maxHeight: 150,
-        marginBottom: 10,
+        width: '50%',
+        maxWidth: 200,
+        maxHeight: 120,
     }
 })
 export default HomeScreen
