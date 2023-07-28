@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "658974395694",
+    "project_id": "spin-app-58826",
+    "storage_bucket": "spin-app-58826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658974395694:android:0d0c90aac7b998f0417ebf",
+        "android_client_info": {
+          "package_name": "com.spinapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658974395694-41pmdmbjcvb5f8bn1ialn57c8lcsacio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj8X13GCU90vEecf28Ak35vLcqRK6Vd1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658974395694-41pmdmbjcvb5f8bn1ialn57c8lcsacio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
