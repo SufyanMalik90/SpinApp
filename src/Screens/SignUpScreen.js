@@ -6,6 +6,7 @@ import Logo from '../../assets/image/SigmaAdsdlogo.png';
 import Input from './Input';
 import Loader from './Loader';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const SignUpScreen = ({ navigation }) => {
   const [input, setInput] = useState({
@@ -14,13 +15,13 @@ const SignUpScreen = ({ navigation }) => {
     password: '',
     phone: '',
   });
-  
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const [countryCode, setCountryCode] = useState('PK');
   const [callingCode, setCallingCode] = useState('92');
-  
+
   const handleConfirmPasswordChange = (text) => {
     setConfirmPassword(text);
   };
@@ -42,14 +43,14 @@ const SignUpScreen = ({ navigation }) => {
       handleError('Please Input Password', 'password');
     } else if (input.password.length < 6) {
       // minimum length for password is 6
-      handleError('Minimum Length of Password is 5', 'password');
+      handleError('Minimum Length of Password is 6', 'password');
     }
     if (input.password !== confirmPassword) {
       // handleError('Passwords do not match.', 'password');
       handleError('Passwords do not match.', 'confirmPassword');
       return;
     }
-    else if(!confirmPassword){
+    else if (!confirmPassword) {
       handleError('Please Input Confirm Password', 'confirmPassword');
     }
     if (!input.phone) {
@@ -65,20 +66,37 @@ const SignUpScreen = ({ navigation }) => {
 
   const createUser = async () => {
     try {
-      const { email, password } = input;
+      const { email, password, username, phone } = input;
       await auth().createUserWithEmailAndPassword(email, password);
+
+      // Once the user is created, add their data to Firestore
+      const user = auth().currentUser;
+      if (user) {
+        await firestore().collection('users').doc(user.uid).set({
+          email: email,
+          username: username,
+          phone: phone,
+          password: password,
+        });
+      }
     } catch (error) {
-      console.log('Error creating user:', error);
-      throw new Error('Something went wrong during user registration.');
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('Error creating user:', error);
+        throw new Error('User with this email already exists. Please use a different email.');
+      } else {
+        console.log('Error creating user:', error);
+        throw new Error('Something went wrong during user registration.');
+      }
     }
   };
+
 
   const register = async () => {
     setLoading(true);
     try {
       await createUser();
       setLoading(false);
-      Alert.alert('Successful', 'Record Inserted');
+      Alert.alert('Successful', 'Account Created');
       navigation.navigate('SignIn');
     } catch (error) {
       setLoading(false);
@@ -178,19 +196,19 @@ const SignUpScreen = ({ navigation }) => {
             password
             onChangeText={(text) => handleOnChange(text, 'password')}
           />
-            <Input
-          placeholder='Confirm Password'
-          iconName='lock-outline'
-          error={error.confirmPassword} // Update the error prop to show error for Confirm Password
-          onFocus={() => {
-            handleError(null, 'confirmPassword');
-          }}
-          password
-          onChangeText={(text) => {
-            handleOnChange(text, 'confirmPassword');
-            handleConfirmPasswordChange(text); // Add this line to update the Confirm Password state
-          }}
-        />
+          <Input
+            placeholder='Confirm Password'
+            iconName='lock-outline'
+            error={error.confirmPassword}
+            onFocus={() => {
+              handleError(null, 'confirmPassword');
+            }}
+            password
+            onChangeText={(text) => {
+              handleOnChange(text, 'confirmPassword');
+              handleConfirmPasswordChange(text);
+            }}
+          />
           <CustomButton text='Register' onPress={onRegesterPresssed} />
           <View style={styles.message}>
             <Text>
