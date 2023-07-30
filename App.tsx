@@ -5,6 +5,7 @@ import SignUpScreen from './src/Screens/SignUpScreen'
 import SplashScreen from './src/Screens/SplashScreen'
 import Navigation from './src/Navigation/Navigation'
 import HomeScreen from './src/Screens/HomeScreen'
+import WatchScreen from './src/Screens/WatchScreen'
 
 const App = () => {
   return (
