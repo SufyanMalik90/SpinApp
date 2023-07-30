@@ -10,6 +10,7 @@ import {
 import React from 'react'
 import Logo from '../../assets/image/logo.png'
 import TopRatedProfiles from '../Components/TopRatedProfiles '
+import SocialIconButtons from '../Components/SocialIconButtons'
 
 const HomeScreen = () => {
 
@@ -20,7 +21,7 @@ const HomeScreen = () => {
             <StatusBar barStyle="light-content" backgroundColor="#6238b4" />
 
             <View style={styles.headerContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
 
                     <View style={styles.text}>
                         <Text style={{ color: '#6238b4', fontWeight: 'bold' }}>Rs 230.02</Text>
@@ -28,19 +29,19 @@ const HomeScreen = () => {
                     <Image source={Logo} style={[styles.logo, { height: height * 0.2 }]} resizeMode="contain" />
 
                 </View>
-                <View style={{ alignItems: 'flex-end', marginHorizontal: '11%' }}>
-                    <View style={styles.withdrawContainer}>
+                <View style={{ alignItems: 'flex-end', marginHorizontal: '11%', marginBottom: 5}}>
                         <Text style={styles.withdrawText}>Withdraw</Text>
-                    </View>
                 </View>
 
-                <View style={{ width: '100%', height: 2, backgroundColor: '#000', marginVertical: 5 }} />
+                <SocialIconButtons />
+                <View style={{ width: '100%', height: 2, backgroundColor: '#fff', marginVertical: 5 }} />
+
 
                 <View style={{ alignItems: 'center', flexDirection: 'row', marginVertical: 4, justifyContent: 'space-around' }}>
                     <Text style={styles.textMessage}>Invite Friend</Text>
                     <Text style={[styles.textMessage, { backgroundColor: '#fffffd', color: '#55588d', borderRadius: 5, paddingHorizontal: 2 }]}>Invite Now</Text>
                 </View>
-                <View style={{ width: '100%', height: 2, backgroundColor: '#000', marginVertical: 5 }} />
+                <View style={{ width: '100%', height: 2, backgroundColor: '#fff', marginVertical: 5 }} />
                 <TopRatedProfiles />
                 
             </View>
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: '#6238b4',
         width: '100%',
-        height: '39%'
+        height: 'auto'
     },
     headerText: {
         flexDirection: 'row',
