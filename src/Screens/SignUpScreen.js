@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TextInput, Image, useWindowDimensions, ScrollVi
 import React, { useState } from 'react';
 import CustomButton from '../Components/CustomButton';
 import CountryPicker from 'react-native-country-picker-modal';
-import Logo from '../../assets/image/SigmaAdsdlogo.png';
+import Logo from '../../assets/image/logo.png';
 import Input from './Input';
 import Loader from './Loader';
 import auth from '@react-native-firebase/auth';
