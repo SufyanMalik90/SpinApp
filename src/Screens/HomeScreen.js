@@ -12,9 +12,13 @@ import Logo from '../../assets/image/logo.png'
 import TopRatedProfiles from '../Components/TopRatedProfiles '
 import SocialIconButtons from '../Components/SocialIconButtons'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
     const { height } = useWindowDimensions();
+
+    const onMenuPressed = () => {
+        navigation.navigate('WatchNow');
+    }
 
     return (
         <View style={styles.root}>
@@ -47,7 +51,7 @@ const HomeScreen = () => {
             </View>
             <View style={styles.menuContainer}>
                 <View style={styles.menu}>
-                    <Text style={styles.menuText}>Daily Bonus</Text>
+                    <Text style={styles.menuText} onPress={onMenuPressed}>Daily Bonus</Text>
                     <Text style={styles.subText}>Each Add Contain 50 point</Text>
                 </View>
                 <View style={styles.menu}>
