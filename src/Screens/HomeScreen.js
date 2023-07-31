@@ -5,7 +5,8 @@ import {
     ScrollView,
     StatusBar,
     useWindowDimensions,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native'
 import React from 'react'
 import Logo from '../../assets/image/logo.png'
@@ -18,6 +19,9 @@ const HomeScreen = ({navigation}) => {
 
     const onMenuPressed = () => {
         navigation.navigate('WatchNow');
+    }
+    const onWithdrawPressed = () => {
+        navigation.navigate('Withdraw');
     }
 
     return (
@@ -33,9 +37,11 @@ const HomeScreen = ({navigation}) => {
                     <Image source={Logo} style={[styles.logo, { height: height * 0.2 }]} resizeMode="contain" />
 
                 </View>
+                <TouchableOpacity onPress={onWithdrawPressed}>
                 <View style={{ alignItems: 'flex-end', marginHorizontal: '11%', marginBottom: 5}}>
                         <Text style={styles.withdrawText}>Withdraw</Text>
                 </View>
+                </TouchableOpacity>
 
                 <SocialIconButtons />
                 <View style={{ width: '100%', height: 2, backgroundColor: '#fff', marginVertical: 5 }} />
@@ -43,7 +49,9 @@ const HomeScreen = ({navigation}) => {
 
                 <View style={{ alignItems: 'center', flexDirection: 'row', marginVertical: 4, justifyContent: 'space-around' }}>
                     <Text style={styles.textMessage}>Invite Friend</Text>
+                    <TouchableOpacity onPress={onWithdrawPressed}>
                     <Text style={[styles.textMessage, { backgroundColor: '#fffffd', color: '#55588d', borderRadius: 5, paddingHorizontal: 2 }]}>Invite Now</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ width: '100%', height: 2, backgroundColor: '#fff', marginVertical: 5 }} />
                 <TopRatedProfiles />

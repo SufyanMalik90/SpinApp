@@ -6,6 +6,7 @@ import SplashScreen from './src/Screens/SplashScreen'
 import Navigation from './src/Navigation/Navigation'
 import HomeScreen from './src/Screens/HomeScreen'
 import WatchScreen from './src/Screens/WatchScreen'
+import Withdraw from './src/Screens/Withdraw'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       {/* <SignUpScreen /> */}
       {/* <SplashScreen /> */}
       <Navigation />
+      {/* <Withdraw /> */}
       {/* <HomeScreen /> */}
     </View>
   )
