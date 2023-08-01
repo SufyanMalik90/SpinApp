@@ -7,6 +7,7 @@ import Input from './Input';
 import Loader from './Loader';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const SignUpScreen = ({ navigation }) => {
   const [input, setInput] = useState({
@@ -168,12 +169,13 @@ const SignUpScreen = ({ navigation }) => {
               withFlag
               withCallingCode
               onSelect={(country) => {
-                console.log('country', country);
+                console.log('country', country.callingCode);
                 const { cca2, callingCode } = country;
                 setCountryCode(cca2);
                 setCallingCode(callingCode[0]);
               }}
             />
+          <Icon name="chevron-down" size={22} color="white"/>
             <TextInput
               style={{
                 color: '#000',
