@@ -1,170 +1,179 @@
+import React from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
-    StatusBar,
-    useWindowDimensions,
-    Image,
-    TouchableOpacity
-} from 'react-native'
-import React from 'react'
-import Logo from '../../assets/image/logo.png'
-import TopRatedProfiles from '../Components/TopRatedProfiles '
-import SocialIconButtons from '../Components/SocialIconButtons'
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  useWindowDimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import Logo from '../../assets/image/logo.png';
+import TopRatedProfiles from '../Components/TopRatedProfiles ';
+import SocialIconButtons from '../Components/SocialIconButtons';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import MenuItem from '../Components/MenuItem';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
+  const menuData = [
+    {
+      title: 'Daily Bonus',
+      description: 'Each Add Contain 50 point',
+      route: 'WatchNow', // Add the route name
+    },
+    {
+      title: 'Extra Reward',
+      description: 'Each Add Contain 50 point',
+      route: 'WatchNow',
+    },
+    {
+      title: 'Watch Earn',
+      description: 'Each Add Contain 50 point',
+      route: 'WatchNow',
+    },
+    {
+      title: 'Spin Earn',
+      description: 'Each Add Contain 50 point',
+      route: 'WatchNow',
+    },
+  ];
 
-    const { height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
 
-    const onMenuPressed = () => {
-        navigation.navigate('WatchNow');
-    }
-    const onWithdrawPressed = () => {
-        navigation.navigate('Withdraw');
-    }
+  const onWithdrawPressed = () => {
+    navigation.navigate('Withdraw');
+  };
 
-    return (
-        <View style={styles.root}>
-            <StatusBar barStyle="light-content" backgroundColor="#6238b4" />
+  return (
+    <ScrollView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#6238b4" />
 
-            <View style={styles.headerContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
-
-                    <View style={styles.text}>
-                        <Text style={{ color: '#6238b4', fontWeight: 'bold' }}>Rs 230.02</Text>
-                    </View>
-                    <Image source={Logo} style={[styles.logo, { height: height * 0.2 }]} resizeMode="contain" />
-
-                </View>
-                <TouchableOpacity onPress={onWithdrawPressed}>
-                <View style={{ alignItems: 'flex-end', marginHorizontal: '11%', marginBottom: 5}}>
-                        <Text style={styles.withdrawText}>Withdraw</Text>
-                </View>
-                </TouchableOpacity>
-
-                <SocialIconButtons />
-                <View style={{ width: '100%', height: 2, backgroundColor: '#fff', marginVertical: 5 }} />
-
-
-                <View style={{ alignItems: 'center', flexDirection: 'row', marginVertical: 4, justifyContent: 'space-around' }}>
-                    <Text style={styles.textMessage}>Invite Friend</Text>
-                    <TouchableOpacity onPress={onWithdrawPressed}>
-                    <Text style={[styles.textMessage, { backgroundColor: '#fffffd', color: '#55588d', borderRadius: 5, paddingHorizontal: 2 }]}>Invite Now</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ width: '100%', height: 2, backgroundColor: '#fff', marginVertical: 5 }} />
-                <TopRatedProfiles />
-                
-            </View>
-            <View style={styles.menuContainer}>
-                <View style={styles.menu}>
-                    <Text style={styles.menuText} onPress={onMenuPressed}>Daily Bonus</Text>
-                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
-                </View>
-                <View style={styles.menu}>
-                    <Text style={styles.menuText}>Extra Reward</Text>
-                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
-                </View>
-            </View>
-
-            <View style={styles.menuContainer}>
-                <View style={styles.menu}>
-                    <Text style={styles.menuText}>Watch Earn</Text>
-                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
-                </View>
-                <View style={styles.menu}>
-                    <Text style={styles.menuText}>Spin Earn</Text>
-                    <Text style={styles.subText}>Each Add Contain 50 point</Text>
-                </View>
-            </View>
+      <View style={styles.headerContainer}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={styles.text}>
+            <Text style={{ color: '#6238b4', fontWeight: 'bold' }}>Rs 230.02</Text>
+          </View>
+          <Image
+            source={Logo}
+            style={[styles.logo, { height: height * 0.2 }]}
+            resizeMode="contain"
+          />
         </View>
-    )
-}
+        <TouchableOpacity onPress={onWithdrawPressed}>
+          <View style={styles.withdraw}>
+            <Text style={styles.withdrawText}>Withdraw</Text>
+          </View>
+        </TouchableOpacity>
+
+        <SocialIconButtons />
+        <View style={styles.divider} />
+
+        <View style={styles.inviteContainer}>
+          <Text style={styles.textMessage}>Invite Friend</Text>
+          <TouchableOpacity onPress={onWithdrawPressed}>
+            <Text
+              style={[
+                styles.textMessage,
+                styles.inviteButton,
+                { color: '#55588d' },
+              ]}>
+              Invite Now
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.divider} />
+        <TopRatedProfiles />
+      </View>
+
+      <View style={styles.menuContainer}>
+        <MenuItem menuData={menuData} navigation={navigation} />
+      </View>
+
+      <View style={styles.bannerContainer}>
+        <BannerAd
+          unitId="ca-app-pub-3709682500463474/7685545872"
+          size={BannerAdSize.BANNER}
+        />
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1
-    },
-    headerContainer: {
-        backgroundColor: '#6238b4',
-        width: '100%',
-        height: 'auto'
-    },
-    headerText: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 10,
-        marginHorizontal: '-20%'
-    },
-    text: {
-        backgroundColor: '#fff',
-        width: 'auto',
-        height: 30,
-        marginHorizontal: '8%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 5,
-        position: 'absolute',
-        right: 0
-    },
-    withdraw: {
-        alignItems: 'center', // Center the content horizontally
-        width: 'auto',
-        marginHorizontal: '11%',
-        justifyContent: 'center', // Center the content vertically
-    },
-    withdrawText: {
-        color: '#6238b4',
-        fontWeight: 'bold',
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        width: 80,
-        height: 25,
-        textAlign: 'center', // Use textAlign to center the text within the Text component
-        textAlignVertical: 'center', // For Android, use this to center the text vertically
-    },
-    menu: {
-        backgroundColor: '#6238b4',
-        width: '45%',
-        height: 120,
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  headerContainer: {
+    backgroundColor: '#6238b4',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  text: {
+    backgroundColor: '#fff',
+    width: 'auto',
+    height: 30,
+    marginHorizontal: '8%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    position: 'absolute',
+    right: 0,
+  },
+  withdraw: {
+    alignItems: 'flex-end',
+    width: 'auto',
+    marginHorizontal: '11%',
+    justifyContent: 'center',
+  },
+  withdrawText: {
+    color: '#6238b4',
+    fontWeight: 'bold',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    width: 80,
+    height: 25,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  divider: {
+    width: '100%',
+    height: 2,
+    backgroundColor: '#fff',
+    marginVertical: 5,
+  },
+  inviteContainer: {
+    flexDirection: 'row',
+    marginVertical: 4,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  inviteButton: {
+    backgroundColor: '#fffffd',
+    borderRadius: 5,
+    paddingHorizontal: 2,
+  },
+  textMessage: {
+    color: '#fff',
+    fontWeight: 'bold',
+    marginLeft: 8,
+  },
+  logo: {
+    width: '50%',
+    maxWidth: 200,
+    maxHeight: 120,
+  },
+  bannerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  menuContainer: {
+    flexDirection: 'row',
+    marginVertical: 6,
+    justifyContent: 'space-around',
+  },
+});
 
-    },
-    menuContainer: {
-        flexDirection: 'row',
-        marginVertical: 6,
-        justifyContent: 'space-around',
-    },
-    textMessage: {
-        color: '#fff',
-        fontWeight: 'bold',
-        marginLeft: 8
-    },
-    menuText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    subText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 12
-    },
-    textProfile: {
-        width: 90,
-        alignItems: 'center',
-        marginTop: 4,
-        marginHorizontal: 15,
-
-
-    },
-    logo: {
-        width: '50%',
-        maxWidth: 200,
-        maxHeight: 120,
-    }
-})
-export default HomeScreen
+export default HomeScreen;

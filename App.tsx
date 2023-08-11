@@ -16,6 +16,7 @@ const App = () => {
       {/* <SignUpScreen /> */}
       {/* <SplashScreen /> */}
       <Navigation />
+      {/* <WatchScreen /> */}
       {/* <Withdraw /> */}
       {/* <HomeScreen /> */}
     </View>

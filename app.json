@@ -1,4 +1,8 @@
 {
   "name": "SpinApp",
-  "displayName": "SpinApp"
+  "displayName": "SpinApp",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-3709682500463474~5264817543"
+    
+  }
 }
