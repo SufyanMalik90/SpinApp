@@ -1,58 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { useFocusEffect } from '@react-navigation/native';
+import {
+  BannerAd,
+  BannerAdSize,
+  RewardedAdEventType,
+} from 'react-native-google-mobile-ads';
+import {TestIds, RewardedAd} from 'react-native-google-mobile-ads';
 
-const WatchScreen = ({ navigation }) => {
+const WatchScreen = ({navigation}) => {
   const [showTimer, setShowTimer] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(30);
   const [timerStartTime, setTimerStartTime] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
-  const startTimer = () => {
-    setShowTimer(true);
-    setTimerStartTime(Date.now());
-  };
+  const adUnitId = __DEV__
+    ? TestIds.REWARDED
+    : 'ca-app-pub-3709682500463474/1764556235';
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (timerStartTime && showTimer) {
-        const elapsedTime = Math.floor((Date.now() - timerStartTime) / 1000);
-        const remainingTime = Math.max(0, secondsLeft - elapsedTime);
-        setSecondsLeft(remainingTime);
-
-        if (remainingTime === 0) {
-          setShowTimer(false);
-          setSecondsLeft(30);
-        }
-      }
-    }, [timerStartTime, showTimer])
-  );
+  const rewarded = RewardedAd.createForAdRequest(adUnitId, {
+    requestNonPersonalizedAdsOnly: true,
+    keywords: ['fashion', 'clothing'],
+  });
 
   useEffect(() => {
-    let timerInterval;
+    const unsubscribeLoaded = rewarded.addAdEventListener(
+      RewardedAdEventType.LOADED,
+      () => {
+        setLoaded(true);
+      },
+    );
+    const unsubscribeEarned = rewarded.addAdEventListener(
+      RewardedAdEventType.EARNED_REWARD,
+      reward => {
+        console.log('User earned reward of ', reward);
+      },
+    );
 
-    if (showTimer && secondsLeft > 0) {
-      timerInterval = setInterval(() => {
-        setSecondsLeft((prevSeconds) => prevSeconds - 1);
-      }, 1000);
-    } else if (showTimer && secondsLeft === 0) {
-      setShowTimer(false);
-      setSecondsLeft(30);
-      // Perform any action you want after the timer ends (e.g., navigate, show reward)
-    }
+    // Start loading the rewarded ad straight away
+    rewarded.load();
 
+    // Unsubscribe from events on unmount
     return () => {
-      clearInterval(timerInterval);
+      unsubscribeLoaded();
+      unsubscribeEarned();
     };
-  }, [showTimer, secondsLeft]);
+  }, []);
+
+  // No advert ready to show yet
+  if (!loaded) {
+    return console.log('No add to show yet not loaded');
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Icon name="arrow-back" size={24} color="white" style={styles.backIcon} />
+          <Icon
+            name="arrow-back"
+            size={24}
+            color="white"
+            style={styles.backIcon}
+          />
         </TouchableOpacity>
         <Text style={styles.heading}>Watch Ads</Text>
       </View>
@@ -65,13 +81,16 @@ const WatchScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.messageContainer}>
           <Text style={styles.messageText}>
-            You can watch 200 ads. After every ad, you have to wait for 30 seconds.
+            You can watch 200 ads. After every ad, you have to wait for 30
+            seconds.
           </Text>
         </View>
         <View style={styles.menuContainer}>
           <TouchableOpacity
-            style={[styles.menu, showTimer && styles.disabledMenu]}
-            onPress={startTimer}
+            style={styles.menu}
+            onPress={() => {
+              rewarded.show();
+            }}
             disabled={showTimer}>
             <Text style={styles.menuText}>Watch Ad</Text>
             <Text style={styles.subText}>Each Ad Contains 50 points</Text>
